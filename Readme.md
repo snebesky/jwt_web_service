@@ -21,6 +21,7 @@ PASSWORD_HASH=""
 ```
 
 **PRIVATE_KEY** - Private key to sign the JWT.
+
 **PUBLIC_KEY** - Public key to verify the JWT.
 
 `openssl` can be used to generate the private key.
@@ -34,6 +35,12 @@ MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgAKuj+/OE4vm5XB28
 /+zMSsUAdudgqHY5g2moR+5wpj2hRANCAAR3aoFEIaT2I91j4ZtpkPWWJDxeKPaE
 YqzkGj3GP4YpWQFQG+DxWBEFQuhlPJnvqs1R4Eg4mngs/pHpZ+0XgRwR
 -----END PRIVATE KEY-----
+>> openssl ec -in private-key.pem -pubout > public.pem
+>>cat public.pem
+-----BEGIN PUBLIC KEY-----
+MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEd2qBRCGk9iPdY+GbaZD1liQ8Xij2
+hGKs5Bo9xj+GKVkBUBvg8VgRBULoZTyZ76rNUeBIOJp4LP6R6WftF4EcEQ==
+-----END PUBLIC KEY-----
 ```
 
 **ALGO** - The specific cryptographic algorithm used with the key (`ES256`, `ES384`, `ES512`, `RS256`, `RS384`, etc.).
