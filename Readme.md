@@ -61,6 +61,7 @@ Example `jwt.properties` file.
 ```bash
 
 PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nMIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgAKuj+/OE4vm5XB28/+zMSsUAdudgqHY5g2moR+5wpj2hRANCAAR3aoFEIaT2I91j4ZtpkPWWJDxeKPaEYqzkGj3GP4YpWQFQG+DxWBEFQuhlPJnvqs1R4Eg4mngs/pHpZ+0XgRwR\n-----END PRIVATE KEY-----"
+PUBLIC_KEY="-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEd2qBRCGk9iPdY+GbaZD1liQ8Xij2hGKs5Bo9xj+GKVkBUBvg8VgRBULoZTyZ76rNUeBIOJp4LP6R6WftF4EcEQ==\n-----END PUBLIC KEY-----"
 ISS="https://example.io/oidc/d1_sandbox"
 AUD="https://example.io/oidc/d1_sandbox"
 SCOPE="user:write"
@@ -97,5 +98,7 @@ The service is composed as a [docker](https://www.docker.com) image.
 # References
 
 [JSON Web Token (JWT)](https://auth0.com/docs/secure/tokens/json-web-tokens).
+
 [curl](https://curl.se).
+
 [docker](https://www.docker.com).
