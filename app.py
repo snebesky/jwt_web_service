@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from gen_jwt import generate_jwt, validateJwt
 import hashlib
 from flask_httpauth import HTTPBasicAuth
@@ -34,6 +34,12 @@ users = {
 def getJwtProtectedGet(consumerId):
     return generate_jwt(consumerId, iss, aud, scope, kid, algo, privateKey)
 
+@app.route("/v2/protected/sandbox/jwt/<string:consumerId>", methods=["GET"])
+@auth.login_required
+def getJwtProtectedGetV2(consumerId):
+    jwt = generate_jwt(consumerId, iss, aud, scope, kid, algo, privateKey)
+    return jsonify({"access_token" : jwt} )
+
 @app.route("/protected/sandbox/jwt/", methods=["POST"])
 @auth.login_required
 def getJwtProtectedPost():
@@ -44,6 +50,17 @@ def getJwtProtectedPost():
     
     return generate_jwt(consumerId, iss, aud, scope, kid, algo, privateKey)
 
+@app.route("/v2/protected/sandbox/jwt/", methods=["POST"])
+@auth.login_required
+def getJwtProtectedPostV2():
+    data = request.json
+    consumerId = data.get('consumer_id')
+    if consumerId is None:
+        return "Missing mandatory parameter in request: consumer_id", 400
+    
+    jwt = generate_jwt(consumerId, iss, aud, scope, kid, algo, privateKey)
+    return jsonify({"access_token" : jwt} )
+
 @app.route("/protected/sandbox/validate/", methods=["POST"])
 @auth.login_required
 def validateJwtPost():
@@ -53,9 +70,22 @@ def validateJwtPost():
         return "Missing mandatory parameter in request: jwt", 400
     
     if validateJwt(publicKey, jwt, aud, algo):
-        return "SIGNATURE_OK"
+        return "SIGNATURE_VERIFICATION_OK"
     else:
-        return "SIGNATURE_ERROR", 401
+        return "SIGNATURE_VERIFICATION_FAILED"
+    
+@app.route("/v2/protected/sandbox/validate/", methods=["POST"])
+@auth.login_required
+def validateJwtPostV2():
+    data = request.json
+    jwt = data.get('jwt')
+    if jwt is None:
+        return "Missing mandatory parameter in request: jwt", 400
+    
+    if validateJwt(publicKey, jwt, aud, algo):
+        return jsonify({"status" : "SIGNATURE_VERIFICATION_OK"})
+    else:
+        return jsonify({"status" : "SIGNATURE_VERIFICATION_FAILED"})
 
 @auth.verify_password
 def authenticate(username, password):

@@ -96,10 +96,16 @@ The service is composed as a [docker](https://www.docker.com) image.
 [curl](https://curl.se) examples of accessing the web service API.
 
 ```bash
-# protected api, where there is a extra username for authentication
+# LEGACY API
 >> curl -u "my_user:my_secret_password" http://127.0.0.1:3002/protected/sandbox/jwt/<consumer_id>
 >> curl -u "my_user:my_secret_password" -X POST http://127.0.0.1:3002/protected/sandbox/jwt/ -H "Content-Type: application/json" -d '{"consumer_id" : "<consumer_id>"}'
 >> curl -u "my_user:my_secret_password" -X POST http://127.0.0.1:3002/protected/sandbox/validate/ -H "Content-Type: application/json" -d '{"jwt" : "<jwt>"}'
+```
+
+```bash
+>> curl -u "my_user:my_secret_password" http://127.0.0.1:3002/v2/protected/sandbox/jwt/<consumer_id>
+>> curl -u "my_user:my_secret_password" -X POST http://127.0.0.1:3002/v2/protected/sandbox/jwt/ -H "Content-Type: application/json" -d '{"consumer_id" : "<consumer_id>"}'
+>> curl -u "my_user:my_secret_password" -X POST http://127.0.0.1:3002/v2/protected/sandbox/validate/ -H "Content-Type: application/json" -d '{"jwt" : "<jwt>"}'
 ```
 
 # References
